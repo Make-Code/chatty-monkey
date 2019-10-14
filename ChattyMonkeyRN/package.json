@@ -12,7 +12,8 @@
   "dependencies": {
     "flow": "^0.2.3",
     "react": "16.9.0",
-    "react-native": "0.61.2"
+    "react-native": "0.61.2",
+    "react-native-game-engine": "^0.12.3"
   },
   "devDependencies": {
     "@babel/core": "7.6.4",
