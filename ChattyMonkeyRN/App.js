@@ -22,6 +22,7 @@ function getPlatformsWithOffset(
       offset) 
 {
   let x = platformWidth - offset;
+  while (x < 0) x += platformWidth;
   const blocks = [[0, x]];
   while((x + platformWidth) < screenWidth)
   {
@@ -34,12 +35,13 @@ function getPlatformsWithOffset(
 
 const App: () => React$Node = () => {
 
+  const screen = Dimensions.get('screen');
   const PLATFORM_HEIGHT = 50;
-  const PLATFORM_WIDTH  = 100;
+  const PLATFORM_WIDTH  = screen.width/3;
   const PLATFORM_DIFF = 200;
   const [y, setY] = React.useState(100);
   const [t, setT] = React.useState(0);
-  
+    
   useEffect(() => {
     //console.log('Reached HEre-------')
     let timerHandle = setTimeout(() => {
@@ -49,19 +51,17 @@ const App: () => React$Node = () => {
       } else {
         setY(y + 1);
       }    
-      setT(t + 1);  
+      setT(t + 2);  
     }, 20);
     return function cleanup() {
       clearTimeout(timerHandle);
     };
   });
 
-  const screen = Dimensions.get('screen');
-
-  const offset = t%(screen.width);
+  const offset = t;
   const blocks = getPlatformsWithOffset(
     screen.width, PLATFORM_WIDTH, offset);
-  let blockUp = false;
+  let blockUp = (Math.ceil((t)/PLATFORM_WIDTH))%2 == 0;
   let block_width = 0;
   let block_y = 0;
   const output_list = [];
@@ -87,11 +87,11 @@ const App: () => React$Node = () => {
   }
 
   return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <View style={{width: 50,  height: PLATFORM_HEIGHT, 
                       backgroundColor: 'yellow', top: y}} />
         {output_list}
-      </ScrollView>
+      </View>
   );
 };
 
