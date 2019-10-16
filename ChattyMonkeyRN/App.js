@@ -30,14 +30,17 @@ const App: () => React$Node = () => {
   
   useEffect(() => {
     //console.log('Reached HEre-------')
-    setTimeout(() => {
+    timerHandle = setTimeout(() => {
       console.log('Reached HEre-------Settimeout ' + y)
       if(y > 500) {
         setY(100);
       } else {
         setY(y + 1);
       }      
-    }, 10)
+    }, 10);
+    return function cleanup() {
+      clearTimeout(timerHandle);
+    };
   })
   
   return (
