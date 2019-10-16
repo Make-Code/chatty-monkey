@@ -13,7 +13,7 @@ import {
   View,
   RefreshControl,
   ScrollView,
-  Dimensions, Div
+  Dimensions
 } from 'react-native';
 
 function getPlatformsWithOffset(
