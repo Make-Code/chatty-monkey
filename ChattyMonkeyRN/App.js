@@ -16,6 +16,8 @@ import {
   Dimensions
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 function getPlatformsWithOffset(
       screenWidth, 
       platformWidth, 
@@ -73,27 +75,33 @@ const App: () => React$Node = () => {
     blockUp = !blockUp;
     block_width = blocks[i][1] - blocks[i][0];
     if (blockUp) {
-      block_y = 160 + PLATFORM_DIFF;
+      block_y = 100 + PLATFORM_DIFF;
     } else {
       block_y = 160;
     }
     output_list.push (
       <View key={i} style={{
         height: PLATFORM_HEIGHT, 
-        backgroundColor: blockUp?'brown':'blue', 
+        backgroundColor: blockUp?'#7e481c':'#57a0d3', 
         top: block_y,
         left : blocks[i][0],
         width: block_width,
-        position: 'absolute'}} />
+        position: 'absolute',
+        borderRadius: 10}} />
     );
     //console.log(blocks[i])
   }
 
   return (
       <View style={styles.container}>
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} 
+        style={styles.linearGradient}>
         <View style={{width: 50,  height: PLATFORM_HEIGHT, 
-                      backgroundColor: 'yellow', top: y}} />
+                      backgroundColor: '#fada5e', 
+                      top: y, left: 0, 
+                      postion: 'absolute', borderRadius: 5}} />
         {output_list}
+      </LinearGradient>
       </View>
   );
 };
@@ -101,8 +109,14 @@ const App: () => React$Node = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green', 
-  }
+    backgroundColor: '#4f7942', 
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
 });
 
 export default App;
