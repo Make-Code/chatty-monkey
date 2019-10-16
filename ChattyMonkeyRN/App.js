@@ -22,7 +22,10 @@ function getPlatformsWithOffset(
       offset) 
 {
   let x = platformWidth - offset;
-  while (x < 0) x += platformWidth;
+  while (x < 0) {
+    const delta = Math.abs(Math.floor(x/platformWidth))
+    x += delta*platformWidth;
+  }
   const blocks = [[0, x]];
   while((x + platformWidth) < screenWidth)
   {
