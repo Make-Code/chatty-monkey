@@ -18,10 +18,10 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-function getPlatformsWithOffset(
+const getPlatformsWithOffset = (
       screenWidth, 
       platformWidth, 
-      offset) 
+      offset) =>
 {
   let x = platformWidth - offset;
   while (x < 0) {
@@ -48,14 +48,8 @@ const App: () => React$Node = () => {
   const [t, setT] = React.useState(0);
     
   useEffect(() => {
-    //console.log('Reached HEre-------')
     let timerHandle = setTimeout(() => {
-      //console.log('Reached HEre-------Settimeout ' + y)
-      if(y > 500) {
-        setY(100);
-      } else {
-        setY(y + 1);
-      }    
+      (y > 500) ? setY(100) : setY(y + 1)  
       setT(t + 2);  
     }, 20);
     return function cleanup() {
@@ -67,40 +61,35 @@ const App: () => React$Node = () => {
   const blocks = getPlatformsWithOffset(
     screen.width, PLATFORM_WIDTH, offset);
   let blockUp = (Math.ceil((t)/PLATFORM_WIDTH))%2 == 0;
-  let block_width = 0;
-  let block_y = 0;
-  const output_list = [];
-  for (var i = 0; i < blocks.length; i++)
-  {
+  let blockWidth = 0;
+  let blockY = 0;
+  const outputList = [];
+
+  blocks.forEach((block, index) => {
     blockUp = !blockUp;
-    block_width = blocks[i][1] - blocks[i][0];
-    if (blockUp) {
-      block_y = 100 + PLATFORM_DIFF;
-    } else {
-      block_y = 160;
-    }
-    output_list.push (
-      <View key={i} style={{
+    blockWidth = block[1] - block[0];
+    blockY = (blockUp) ? 100 + PLATFORM_DIFF : 160
+    outputList.push (
+      <View key={index} style={{
         height: PLATFORM_HEIGHT, 
-        backgroundColor: blockUp?'#7e481c':'#57a0d3', 
-        top: block_y,
-        left : blocks[i][0],
-        width: block_width,
+        backgroundColor: blockUp ? '#7e481c' : '#57a0d3', 
+        top: blockY,
+        left : blocks[index][0],
+        width: blockWidth,
         position: 'absolute',
         borderRadius: 10}} />
     );
-    //console.log(blocks[i])
-  }
+  })
 
   return (
       <View style={styles.container}>
       <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} 
         style={styles.linearGradient}>
-        <View style={{width: 50,  height: PLATFORM_HEIGHT, 
+        <View style={{ width: 50,  height: PLATFORM_HEIGHT, 
                       backgroundColor: '#fada5e', 
                       top: y, left: 0, 
                       postion: 'absolute', borderRadius: 5}} />
-        {output_list}
+        {outputList}
       </LinearGradient>
       </View>
   );
