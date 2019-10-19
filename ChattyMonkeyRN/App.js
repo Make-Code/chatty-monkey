@@ -72,7 +72,7 @@ const App: () => React$Node = () => {
     blockWidth = block[1] - block[0];
     blockY = (blockUp) ? 100 + PLATFORM_DIFF : 160;
     outputList.push(
-      <View
+      <View key={index}
         style={{
           height: PLATFORM_HEIGHT,
           backgroundColor: blockUp ? '#7e481c' : '#57a0d3',
@@ -86,21 +86,28 @@ const App: () => React$Node = () => {
     );
   });
 
+  const blockPosition = StyleSheet.create({
+    yellowBlock: {
+      height: PLATFORM_HEIGHT,
+      top: y
+    }
+  });
+
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={styles.linearGradient}
-      >
-        <View style={{
-          width: 50,
-          height: PLATFORM_HEIGHT,
-          backgroundColor: '#fada5e',
-          top: y,
-          left: 0,
-          postion: 'absolute',
-          borderRadius: 5,
-        }}
+        style={styles.linearGradient}>
+        <View
+            style={{
+            width: 50,
+            backgroundColor: '#fada5e',
+            left: 0,
+            position: 'absolute',
+            borderRadius: 5,
+            height: PLATFORM_HEIGHT,
+            top: y
+            }}
         />
         {outputList}
       </LinearGradient>
@@ -112,12 +119,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#4f7942',
+    position: 'relative',
   },
   linearGradient: {
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
     borderRadius: 5,
+    position: 'relative',
   },
 });
 
