@@ -15,7 +15,9 @@ import {
   Dimensions,
 } from 'react-native';
 
+
 import LinearGradient from 'react-native-linear-gradient';
+import shortid from 'shortid';
 
 const getPlatformsWithOffset = (
   screenWidth,
@@ -72,42 +74,32 @@ const App: () => React$Node = () => {
     blockWidth = block[1] - block[0];
     blockY = (blockUp) ? 100 + PLATFORM_DIFF : 160;
     outputList.push(
-      <View key={index}
+      <View
+        key={shortid.generate()}
         style={{
+          ...styles.platform,
           height: PLATFORM_HEIGHT,
-          backgroundColor: blockUp ? '#7e481c' : '#57a0d3',
           top: blockY,
-          left: blocks[index][0],
           width: blockWidth,
-          position: 'absolute',
-          borderRadius: 10,
+          backgroundColor: blockUp ? '#7e481c' : '#57a0d3',
+          left: blocks[index][0],
         }}
       />,
     );
-  });
-
-  const blockPosition = StyleSheet.create({
-    yellowBlock: {
-      height: PLATFORM_HEIGHT,
-      top: y
-    }
   });
 
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={styles.linearGradient}>
+        style={styles.linearGradient}
+      >
         <View
-            style={{
-            width: 50,
-            backgroundColor: '#fada5e',
-            left: 0,
-            position: 'absolute',
-            borderRadius: 5,
+          style={{
+            ...styles.character,
             height: PLATFORM_HEIGHT,
-            top: y
-            }}
+            top: y,
+          }}
         />
         {outputList}
       </LinearGradient>
@@ -127,6 +119,17 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     borderRadius: 5,
     position: 'relative',
+  },
+  character: {
+    width: 50,
+    backgroundColor: '#fada5e',
+    left: 10,
+    position: 'absolute',
+    borderRadius: 5,
+  },
+  platform: {
+    position: 'absolute',
+    borderRadius: 10,
   },
 });
 
